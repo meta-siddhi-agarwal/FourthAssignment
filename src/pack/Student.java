@@ -3,18 +3,28 @@ package pack;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+
 public class Student {
+	
+	//creating array operation class for calling their methods
 	ArrOperation arrayOperationObject=new ArrOperation();
+		
+	//first test function for testing max mirror section function
 	@Test
 	public void testCaseForMaxMirror(){
 		int testArray1[]= {1};
 		assertEquals(1, arrayOperationObject.largestMirrorSection(testArray1));
 		
 		int testArray2[]= {2,2,2,2,2};
-		assertEquals(5, arrayOperationObject.largestMirrorSection(testArray1));
+		assertEquals(5, arrayOperationObject.largestMirrorSection(testArray2));
 		
 		int testArray3[]= {1,2,3,4,5};
 		assertEquals(1, arrayOperationObject.largestMirrorSection(testArray3));
@@ -48,9 +58,19 @@ public class Student {
 		
 		int testArray13[]= {1,4,5,3,5,4,1};
 		assertEquals(7, arrayOperationObject.largestMirrorSection(testArray13));
-			
+		
+
+		assertNotEquals(70, arrayOperationObject.largestMirrorSection(testArray13)
+		,"Largest mirror section should not be 70");
+		
+		int testArray14[]= {};
+		assertNotEquals(10, arrayOperationObject.largestMirrorSection(testArray14)
+		,"Empty error exception");
+		
 	}
 	
+	
+	//second test function for testing number of clumps in an array function
 	@Test
 	public void testCaseForNoOfClumps() {
 		int testArray1[]= {1, 2, 2, 3, 4, 4};
@@ -63,7 +83,7 @@ public class Student {
 		assertEquals(1, arrayOperationObject.noOfClumps(testArray3));
 		
 		int testArray4[]= {1,1,2,2,2,3,4,4,4,4};
-		assertEquals(4, arrayOperationObject.noOfClumps(testArray4));
+		assertEquals(3, arrayOperationObject.noOfClumps(testArray4));
 		
 		int testArray5[]= {1, 2, 2, 3, 4, 4};
 		assertEquals(2, arrayOperationObject.noOfClumps(testArray5));
@@ -74,14 +94,16 @@ public class Student {
 		int testArray7[]= {1};
 		assertEquals(0, arrayOperationObject.noOfClumps(testArray7));
 		
-		
+		assertNotEquals(5,arrayOperationObject.noOfClumps(testArray6),
+		"No. of clumps should be 0");
 	}
 	
+	//third test function for testing fixXY function
 	@Test
 	public void testCaseForFixXY(){
 		
 		int testArray1[]= {5, 4, 9, 4, 9, 5};
-		int expectedArray1[]= {3,7,2,7,2};
+		int expectedArray1[]= {9,4,5,4,5,9};
 		assertArrayEquals(expectedArray1, arrayOperationObject.fixXY(testArray1, 4, 5));
 		
 		int testArray2[]= {1, 4, 1, 5};
@@ -96,28 +118,26 @@ public class Student {
 		int expectedArray4[]= {3,7,2,7,2};
 		assertArrayEquals(expectedArray4, arrayOperationObject.fixXY(testArray4, 7, 2));
 		
-		int testArray5[]= {3,7,1,2,7,5};
-		int expectedArray5[]= {3,7,2,1,7,5};
-		assertEquals(expectedArray5, arrayOperationObject.fixXY(testArray5, 7, 2));
-		
 		int testArray6[]= {1,7,2,3,4,7,2};
 		int expectedArray6[]= {1,7,2,3,4,7,2};
-		assertEquals(expectedArray6, arrayOperationObject.fixXY(testArray6, 7, 2));
+		assertArrayEquals(expectedArray6, arrayOperationObject.fixXY(testArray6, 7, 2));
 		
 		int testArray7[]= {7,2};
 		int expectedArray7[]= {7,2};
-		assertEquals(expectedArray7, arrayOperationObject.fixXY(testArray7, 7, 2));
+		assertArrayEquals(expectedArray7, arrayOperationObject.fixXY(testArray7, 7, 2));
 		
 		int testArray8[]= {7,3,2,7,1,2,7,4,2};
 		int expectedArray8[]= {7,2,3,7,2,1,7,2,4};
-		assertEquals(expectedArray8, arrayOperationObject.fixXY(testArray8, 7, 2));
+		assertArrayEquals(expectedArray8, arrayOperationObject.fixXY(testArray8, 7, 2));
 		
 		int testArray9[]= {-3,-7,-2,-7,-2};
 		int expectedArray9[]= {-3,-7,-2,-7,-2};
-		assertEquals(expectedArray9, arrayOperationObject.fixXY(testArray9, -7, -2));
-				
+		assertArrayEquals(expectedArray9, arrayOperationObject.fixXY(testArray9, -7, -2));
+		
+		
 	}
 	
+	//fourth test function for testing split array function
 	@Test
 	public void testCaseForSplitArray() {
 		int testArray1[]= {1, 1, 1, 2, 1};
@@ -135,6 +155,8 @@ public class Student {
 		int testArray5[]= {5};
 		assertEquals(-1, arrayOperationObject.splitIndex(testArray5));
 		
+		assertNotEquals(-1,arrayOperationObject.splitIndex(testArray3),
+		"Index should be 1");
 	}
 	
 }
