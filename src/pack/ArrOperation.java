@@ -10,8 +10,7 @@ public class ArrOperation {
 	static Scanner scannerObject=new Scanner(System.in);
 	
 	//isValid will control the loop
-	static boolean isValid=true;
-	
+	static boolean isValid=true;	
 	
 	//global array
 	static int array[];
@@ -23,6 +22,7 @@ public class ArrOperation {
 	static ArrOperation arrOperationObject=new ArrOperation();
 	
 	public static void main(String[] args) {
+		
 		
 		while(isValid) {
 			try {
@@ -66,8 +66,9 @@ public class ArrOperation {
 						int fixedArray[]=arrOperationObject.fixXY(array, x, y);
 						System.out.println("Resultant array is ");
 						for(int fixedArrayIndex=0;fixedArrayIndex<fixedArray.length;fixedArrayIndex++) {
-							System.out.print(fixedArray[fixedArrayIndex]);
+							System.out.print(fixedArray[fixedArrayIndex]+" ");
 						}
+						System.out.println();
 						break;
 				
 				//case 4 wil return index of array where leftsum=rightsum
@@ -91,21 +92,31 @@ public class ArrOperation {
 				}
 			}
 			catch(Exception e) {
-				System.out.println("Enter valid input");
-				isValid=false;
+				System.out.println("Please enter valid input");
+				scannerObject.nextLine();
 			}			
 		}		
 	}
 	
-//function will take array size from user
+
+/**
+ * will take array size from user
+ * @return the size of the input array
+ */	
 static int arraySize() {
 	System.out.println("Enter size of input array");
 	int sizeOfArray=scannerObject.nextInt();
 	return sizeOfArray;
 }
-	
-//function will take array as input from user
+
+
+/**
+ * will take array input from user
+ * @param size of the input array
+ * @return the array of given size
+ */
 static	int [] inputArray(int size) {
+	System.out.println("Enter elements in array");
 	int array[]=new int[size];
 	for(int arrayIndex=0;arrayIndex<size;arrayIndex++) {
 		array[arrayIndex]=scannerObject.nextInt();
@@ -113,14 +124,19 @@ static	int [] inputArray(int size) {
 	return array;
 }
 	
-//function will display no. of clumps in an array
+
+/**
+ * will display no. of clumps in an array
+ * @param inputArray provided from which no. of clumps to evaluate
+ * @return no. of clumps in the given array
+ */
  int noOfClumps(int inputArray[]) {
 	int tempClump=0;
 	int clump=0;
 	for(int arrayIndex=0;arrayIndex<inputArray.length-1;arrayIndex++) {
 		if(inputArray[arrayIndex]==inputArray[arrayIndex+1]) {
 			tempClump=tempClump+2;
-			arrayIndex++;
+//			arrayIndex++;
 		}
 		else {
 			if(tempClump>=2)clump++;
@@ -131,7 +147,13 @@ static	int [] inputArray(int size) {
 	return clump;
 }
 
-//function will fixXY problem
+ /**
+  * will alter positions of y with other numbers
+  * @param inputArray provided by the user
+  * @param x variable whose position is fixed
+  * @param y variable whose position can be altered
+  * @return modified array
+  */
 int[] fixXY(int inputArray[] ,int x, int y) {
 	List<Integer> indexOfX=new ArrayList<>();
 	int countX=0,countY=0;
@@ -168,13 +190,19 @@ int[] fixXY(int inputArray[] ,int x, int y) {
 	return inputArray;
 }
 
-/*function wsill split array at index where leftsum=rightsum 
-and return it else return -1 */
+
+/**
+ * will split array at index where leftsum=rightsum 
+    and return it else return -1
+ * @param inputArray provided be the user
+ * @return the index at which leftsum=rightsum or -1
+ */
 int splitIndex(int inputArray[]) {
 	int leftIndex=0,rightIndex=inputArray.length-1;
 	int leftsum=inputArray[0],rightsum=inputArray[inputArray.length-1];
 	while(leftIndex<=rightIndex) {		
 		if(leftsum==rightsum && leftIndex+1==rightIndex)return rightIndex;
+
 		
 		if(leftsum<rightsum) {
 			
@@ -198,45 +226,59 @@ int splitIndex(int inputArray[]) {
 	return -1;
 }
 
-//function will find max no. of mirror section in an array
+
+/**
+ * will find max no. of mirror section in an array
+ * @param maxMirror input array provided by the user
+ * @return largest mirror section as integer
+ */
 int largestMirrorSection(int maxMirror[]) {
-	int max=0;
+//	if(maxMirror.length==1)return 1;
+	int largestMirror=1;
 	for(int maxMirrorIndex=0;maxMirrorIndex<maxMirror.length;maxMirrorIndex++) {
 		int firstLoopStartIndex=maxMirrorIndex;
 		int firstLoopEndIndex=maxMirror.length-1;
 		int noOfMirror=0;
 		int reversedMaxMirrorIndex=maxMirror.length-1;
+		
 		while(firstLoopStartIndex<maxMirror.length
-				&& firstLoopEndIndex>=0) {
+				&& firstLoopEndIndex>=0 ) {
 			if(maxMirror[firstLoopStartIndex]==maxMirror[firstLoopEndIndex]) {
-				noOfMirror++;
+				if( firstLoopEndIndex==firstLoopStartIndex && noOfMirror>0)
+					noOfMirror++;
+				else if(firstLoopEndIndex==firstLoopStartIndex && noOfMirror<=0) {}
+				else noOfMirror++;
 				firstLoopStartIndex++;
 				firstLoopEndIndex--;
 			}
+			
 			else {
-				max=Math.max(noOfMirror, max);
+				largestMirror=Math.max(noOfMirror, largestMirror);
 				firstLoopEndIndex--;
 				noOfMirror=0;
 			}
 		}
-		max=Math.max(noOfMirror, max);
+		largestMirror=Math.max(noOfMirror, largestMirror);
 		int secondLoopStartIndex=0;
 		int secondLoopEndIndex=maxMirror.length-1;
 		noOfMirror=0;
-		while(secondLoopStartIndex<maxMirror.length-1 && secondLoopEndIndex>=0) {
+		while(secondLoopStartIndex<maxMirror.length-1 ) {
 			if(maxMirror[secondLoopStartIndex]==maxMirror[secondLoopEndIndex]) {
+				if(secondLoopEndIndex==secondLoopStartIndex && noOfMirror>0)
 				noOfMirror++;
+				else if(secondLoopEndIndex==secondLoopStartIndex && noOfMirror<=0) {}
+				else noOfMirror++;
 				secondLoopStartIndex++;
 				secondLoopEndIndex--;
 			}
 			else {
-				max=Math.max(noOfMirror, max);
+				largestMirror=Math.max(noOfMirror, largestMirror);
 				secondLoopStartIndex++;
 				noOfMirror=0;
 			}
 		}
-		max=Math.max(noOfMirror, max);		
+		largestMirror=Math.max(noOfMirror, largestMirror);		
 	}
-	return max;
+	return largestMirror;
 }
 }
